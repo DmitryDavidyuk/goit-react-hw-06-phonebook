@@ -1,0 +1,13 @@
+.contact {
+  padding-left: 5px;
+}
+
+.contactList {
+  display: flex;
+  align-items: center;
+}
+
+.contactList,
+p {
+  margin-right: 10px;
+}
