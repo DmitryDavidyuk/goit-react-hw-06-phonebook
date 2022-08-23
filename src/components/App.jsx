@@ -6,8 +6,13 @@ import ContactsList from './ContactsList';
 import ContactsForm from './ContactsForm';
 import Filter from './Filter';
 import CSS from './App.module.css';
+// import { useSelector, useDispatch } from 'react-redux/es/exports';
+// import { addContact, remuveContact } from '../Redux/store';
 
 export default function App() {
+  // const dispatch = useDispatch();
+  // const value = useSelector(state => state.myValue);
+
   const [contacts, setContacts] = useState(
     () => JSON.parse(window.localStorage.getItem('contacts')) ?? []
   );
