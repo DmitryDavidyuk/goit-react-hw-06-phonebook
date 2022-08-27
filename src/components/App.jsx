@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+// import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,29 +6,15 @@ import ContactsList from './ContactsList';
 import ContactsForm from './ContactsForm';
 import Filter from './Filter';
 import CSS from './App.module.css';
-// import { useSelector, useDispatch } from 'react-redux/es/exports';
-// import { addContact, remuveContact } from '../Redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from '../Redux/store';
 
 export default function App() {
-  // const dispatch = useDispatch();
-  // const value = useSelector(state => state.myValue);
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.items);
+  const filter = useSelector(state => state.contacts.filter);
 
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(window.localStorage.getItem('contacts')) ?? []
-  );
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts, filter]);
-
-  const addContact = ({ name, number }) => {
-    const contact = {
-      id: nanoid(5),
-      name,
-      number,
-    };
-
+  const addContactID = ({ name, number }) => {
     if (
       contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -40,16 +26,16 @@ export default function App() {
     } else if (name.trim() === '' || number.trim() === '') {
       toast.error("Введіть ім'я та номер телефону контакту!");
     } else {
-      setContacts([contact, ...contacts]);
+      dispatch(
+        addContact({
+          id: nanoid(5),
+          name,
+          number,
+        })
+      );
       toast.success('Контакт додано!');
     }
   };
-
-  const deleteContact = id => {
-    setContacts(prevState => prevState.filter(contact => contact.id !== id));
-    toast.info(`Контакт видалено`);
-  };
-
   const getVisibleContacts = () => {
     const normalizedFilter = filter.toLowerCase();
 
@@ -58,20 +44,13 @@ export default function App() {
     );
   };
 
-  const changeFilter = e => {
-    setFilter(e.currentTarget.value);
-  };
-
   return (
     <div className={CSS.container}>
       <h1>Телефонна книга</h1>
-      <ContactsForm onSubmit={addContact} />
+      <ContactsForm onSubmit={addContactID} />
       <h2>Контакти</h2>
-      <Filter value={filter} onChange={changeFilter} />
-      <ContactsList
-        contacts={getVisibleContacts()}
-        onDeleteContact={deleteContact}
-      />
+      <Filter />
+      <ContactsList contacts={getVisibleContacts()} />
       <ToastContainer position="top-left" autoClose={2000} />
     </div>
   );
