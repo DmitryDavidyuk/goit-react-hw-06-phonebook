@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterContacts } from 'Redux/store';
+import { filterContacts } from 'Redux/reducers';
 
 const Filter = () => {
   const dispath = useDispatch();

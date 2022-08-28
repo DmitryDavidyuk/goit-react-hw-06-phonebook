@@ -7,7 +7,7 @@ import ContactsForm from './ContactsForm';
 import Filter from './Filter';
 import CSS from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from '../Redux/store';
+import { addContact } from '../Redux/reducers';
 
 export default function App() {
   const dispatch = useDispatch();

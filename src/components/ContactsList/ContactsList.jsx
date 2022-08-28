@@ -1,7 +1,7 @@
 import React from 'react';
 import CSS from './Contacts.module.css';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../Redux/store';
+import { deleteContact } from '../../Redux/reducers';
 
 const ContactsList = ({ contacts }) => {
   const dispath = useDispatch();
